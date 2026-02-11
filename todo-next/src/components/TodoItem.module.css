@@ -1,0 +1,155 @@
+.item {
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  padding: 12px 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s;
+}
+
+.item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.mainRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+  accent-color: #4a90d9;
+}
+
+.text {
+  flex: 1;
+  font-size: 1rem;
+  word-break: break-word;
+  cursor: default;
+  padding: 2px 0;
+  border: 2px solid transparent;
+  border-radius: 4px;
+}
+
+.completed .text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.editing {
+  cursor: text;
+  border-color: #4a90d9;
+  outline: none;
+  padding: 2px 6px;
+  background: #f8f9fa;
+}
+
+.deleteBtn {
+  padding: 4px 10px;
+  font-size: 0.875rem;
+  color: #e74c3c;
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.item:hover .deleteBtn {
+  opacity: 1;
+}
+
+.deleteBtn:hover {
+  background: #fdecea;
+  border-color: #e74c3c;
+}
+
+/* Date row */
+.dateRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding-left: 32px;
+}
+
+.dateDisplay {
+  font-size: 0.8rem;
+  color: #888;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.dateDisplay:hover {
+  background: #f0f2f5;
+}
+
+.overdue {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.dateInput {
+  flex: 1;
+  padding: 4px 6px;
+  font-size: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  color: #555;
+}
+
+.dateInput:focus {
+  border-color: #4a90d9;
+}
+
+.dateSeparator {
+  font-size: 0.8rem;
+  color: #888;
+  flex-shrink: 0;
+}
+
+.dateDoneBtn {
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  color: #4a90d9;
+  background: none;
+  border: 1px solid #4a90d9;
+  border-radius: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.dateDoneBtn:hover {
+  background: #4a90d9;
+  color: #fff;
+}
+
+@media (max-width: 450px) {
+  .item {
+    padding: 10px 10px;
+  }
+
+  .mainRow {
+    gap: 8px;
+  }
+
+  .deleteBtn {
+    opacity: 1;
+    padding: 4px 6px;
+    font-size: 0.75rem;
+  }
+
+  .dateRow {
+    padding-left: 0;
+    flex-wrap: wrap;
+  }
+}

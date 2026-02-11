@@ -1,0 +1,164 @@
+.container {
+  width: 100%;
+  max-width: 520px;
+  overflow: hidden;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #1a1a1a;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.formRow {
+  display: flex;
+  gap: 8px;
+}
+
+.dateRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dateInput {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 0.875rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+  color: #555;
+}
+
+.dateInput:focus {
+  border-color: #4a90d9;
+}
+
+.dateSeparator {
+  font-size: 0.875rem;
+  color: #888;
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: #4a90d9;
+}
+
+.submitBtn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #4a90d9;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.submitBtn:hover {
+  background: #357abd;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.filterBtn {
+  flex: 1;
+  padding: 8px 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #666;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filterBtn:hover {
+  border-color: #4a90d9;
+  color: #4a90d9;
+}
+
+.filterBtnActive {
+  background: #4a90d9;
+  border-color: #4a90d9;
+  color: #fff;
+}
+
+/* List */
+.list {
+  list-style: none;
+}
+
+/* Count */
+.count {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #888;
+  margin-top: 8px;
+}
+
+@media (max-width: 450px) {
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .input,
+  .submitBtn {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .dateInput {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
+
+  .filters {
+    gap: 4px;
+  }
+
+  .filterBtn {
+    font-size: 0.75rem;
+    padding: 6px 0;
+    border-width: 1px;
+    min-width: 0;
+  }
+
+  .formRow {
+    gap: 4px;
+  }
+
+  .dateRow {
+    gap: 4px;
+  }
+}
