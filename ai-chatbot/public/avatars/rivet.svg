@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Wrench - Mechanic motif -->
+  <path d="M20 44 L36 28" stroke="#d4a84b" stroke-width="4" stroke-linecap="round"/>
+  <!-- Wrench head top -->
+  <path d="M36 28 C36 22, 42 18, 46 20 C48 21, 48 25, 46 27 L40 30 Z" fill="#d4a84b"/>
+  <path d="M36 28 C32 26, 30 20, 34 18 C36 16, 40 17, 40 20" stroke="#d4a84b" stroke-width="2" fill="none"/>
+  <!-- Wrench handle grip -->
+  <rect x="17" y="41" width="10" height="10" rx="2" fill="#3d2e1e" stroke="#d4a84b" stroke-width="2" transform="rotate(45 22 46)"/>
+  <!-- Small bolt detail -->
+  <circle cx="44" cy="22" r="2" fill="#2a2015"/>
+</svg>
