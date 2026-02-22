@@ -66,10 +66,7 @@ db-reset: ## Reset database
 	npm run db:reset
 
 docker-build: ## Build Docker image
-	docker build -t $(SERVICE_NAME):latest \
-		--build-arg DATABASE_URL=${DATABASE_URL} \
-		--build-arg JWT_SECRET=${JWT_SECRET} \
-		.
+	docker build -t $(SERVICE_NAME):latest .
 
 docker-run: ## Run Docker container
 	docker run -p $(PORT):$(PORT) \
@@ -85,7 +82,7 @@ gcloud-auth: ## Authenticate with Google Cloud
 gcloud-build: ## Build image on Google Cloud Build
 	gcloud builds submit --tag gcr.io/$(PROJECT_ID)/$(SERVICE_NAME)
 
-deploy: ## Deploy to Cloud Run
+deploy: ## Deploy to Cloud Run (requires Secret Manager: DATABASE_URL, JWT_SECRET)
 	gcloud run deploy $(SERVICE_NAME) \
 		--image gcr.io/$(PROJECT_ID)/$(SERVICE_NAME) \
 		--platform managed \
@@ -93,8 +90,7 @@ deploy: ## Deploy to Cloud Run
 		--port $(PORT) \
 		--allow-unauthenticated \
 		--set-env-vars "NODE_ENV=production" \
-		--set-env-vars "DATABASE_URL=${DATABASE_URL}" \
-		--set-env-vars "JWT_SECRET=${JWT_SECRET}" \
+		--set-secrets "DATABASE_URL=DATABASE_URL:latest,JWT_SECRET=JWT_SECRET:latest,JWT_REFRESH_SECRET=JWT_REFRESH_SECRET:latest" \
 		--min-instances 0 \
 		--max-instances 10 \
 		--memory 512Mi \

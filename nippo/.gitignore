@@ -70,9 +70,6 @@ logs
 prisma/migrations/dev.db
 prisma/migrations/dev.db-journal
 
-# Docker
-.dockerignore
-
 # Google Cloud
 .gcloudignore
 service-account-key.json
