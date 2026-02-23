@@ -1,6 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 import * as crypto from 'crypto';
 
+// 本番環境での実行を禁止する
+if (process.env.NODE_ENV === 'production') {
+  console.error('❌ seed スクリプトは本番環境では実行できません');
+  process.exit(1);
+}
+
 const prisma = new PrismaClient();
 
 // -----------------------------------------------------------------------
@@ -8,6 +14,8 @@ const prisma = new PrismaClient();
 // 全ユーザーの開発パスワード: "password123"
 // NOTE: Issue #9 (bcrypt実装) 完了後、bcrypt.hashSync() に置き換えること
 // -----------------------------------------------------------------------
+// ⚠️ セキュリティ注意: SHA-256 はパスワードハッシュとして不適切です（ブルートフォース耐性なし）
+// Issue #9 (bcrypt実装) 完了後、bcrypt.hashSync('password123', 12) に必ず置き換えること
 const DEV_PASSWORD_HASH = crypto
   .createHash('sha256')
   .update('password123:dev-salt')
@@ -534,7 +542,6 @@ async function main() {
   console.log(`  - Daily reports: ${counts.reports}  (approved: 5, submitted: 6, rejected: 1, draft: 1)`);
   console.log(`  - Visit records: ${counts.visitRecords}`);
   console.log(`  - Comments     : ${counts.comments}`);
-  console.log('\n🔑 Dev login: any email above / password: password123');
 }
 
 main()
