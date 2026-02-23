@@ -1,0 +1,131 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 営業マスタ
+model Sales {
+  id           Int       @id @default(autoincrement()) @map("sales_id")
+  name         String
+  email        String    @unique
+  passwordHash String    @map("password_hash")
+  isSupervisor Boolean   @default(false) @map("is_supervisor")
+  supervisorId Int?      @map("supervisor_id")
+  department   String
+  status       String    @default("active") // active, inactive
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // 上長-部下の自己参照リレーション
+  supervisor    Sales?  @relation("SupervisorSubordinate", fields: [supervisorId], references: [id])
+  subordinates  Sales[] @relation("SupervisorSubordinate")
+
+  // 作成した日報
+  dailyReports DailyReport[]
+
+  // 承認した日報
+  approvedReports DailyReport[] @relation("ApprovedBy")
+
+  // 担当顧客
+  customers Customer[]
+
+  // 作成したコメント
+  comments SupervisorComment[]
+
+  @@index([supervisorId], name: "idx_sales_supervisor")
+  @@map("sales")
+}
+
+// 顧客マスタ
+model Customer {
+  id               Int      @id @default(autoincrement()) @map("customer_id")
+  customerName     String   @map("customer_name")
+  address          String?
+  phone            String?
+  assignedSalesId  Int      @map("assigned_sales_id")
+  industry         String?
+  status           String   @default("active") // active, inactive, potential
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // リレーション
+  assignedSales Sales          @relation(fields: [assignedSalesId], references: [id])
+  visitRecords  VisitRecord[]
+
+  @@index([assignedSalesId], name: "idx_customer_sales")
+  @@map("customers")
+}
+
+// 日報
+model DailyReport {
+  id          Int       @id @default(autoincrement()) @map("report_id")
+  salesId     Int       @map("sales_id")
+  reportDate  DateTime  @map("report_date") @db.Date
+  status      String    @default("draft") // draft, submitted, approved, rejected
+  problem     String?   @db.Text
+  plan        String?   @db.Text
+  submittedAt DateTime? @map("submitted_at") @db.Timestamptz(6)
+  approvedAt  DateTime? @map("approved_at") @db.Timestamptz(6)
+  approvedBy  Int?      @map("approved_by")
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // リレーション
+  sales        Sales               @relation(fields: [salesId], references: [id])
+  approver     Sales?              @relation("ApprovedBy", fields: [approvedBy], references: [id])
+  visitRecords VisitRecord[]
+  comments     SupervisorComment[]
+
+  // 1営業1日1日報の制約
+  @@unique([salesId, reportDate], name: "uk_sales_date")
+  @@index([salesId, reportDate], name: "idx_daily_report_sales_date")
+  @@index([status], name: "idx_daily_report_status")
+  @@index([reportDate], name: "idx_daily_report_date")
+  @@map("daily_reports")
+}
+
+// 訪問記録
+model VisitRecord {
+  id           Int      @id @default(autoincrement()) @map("visit_id")
+  reportId     Int      @map("report_id")
+  customerId   Int      @map("customer_id")
+  visitContent String   @map("visit_content") @db.Text
+  visitTime    String?  @map("visit_time") // HH:MM形式
+  displayOrder Int      @map("display_order")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // リレーション（ON DELETE CASCADE）
+  dailyReport DailyReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  customer    Customer    @relation(fields: [customerId], references: [id])
+
+  @@index([reportId], name: "idx_visit_record_report")
+  @@index([customerId], name: "idx_visit_record_customer")
+  @@map("visit_records")
+}
+
+// 上長コメント
+model SupervisorComment {
+  id           Int      @id @default(autoincrement()) @map("comment_id")
+  reportId     Int      @map("report_id")
+  supervisorId Int      @map("supervisor_id")
+  commentType  String   @map("comment_type") // problem, plan, general
+  commentText  String   @map("comment_text") @db.Text
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // リレーション（ON DELETE CASCADE）
+  dailyReport DailyReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  supervisor  Sales       @relation(fields: [supervisorId], references: [id])
+
+  @@index([reportId], name: "idx_comment_report")
+  @@index([supervisorId], name: "idx_comment_supervisor")
+  @@map("supervisor_comments")
+}
