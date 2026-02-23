@@ -55,7 +55,7 @@ jobs:
             --port 8080 \
             --allow-unauthenticated \
             --set-env-vars "NODE_ENV=production" \
-            --set-secrets "DATABASE_URL=DATABASE_URL:latest,JWT_SECRET=JWT_SECRET:latest" \
+            --set-secrets "DATABASE_URL=DATABASE_URL:latest,JWT_SECRET=JWT_SECRET:latest,JWT_REFRESH_SECRET=JWT_REFRESH_SECRET:latest" \
             --min-instances 0 \
             --max-instances 10 \
             --memory 512Mi \
