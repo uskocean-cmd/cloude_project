@@ -1,4 +1,4 @@
-.PHONY: help install dev build start clean test lint format db-migrate db-seed docker-build docker-run deploy
+.PHONY: help install dev build start clean test lint format db-migrate db-seed docker-build docker-run deploy up down up-db up-db-test
 
 # Variables
 PROJECT_ID ?= XXXX
@@ -65,7 +65,22 @@ db-studio: ## Open Prisma Studio
 db-reset: ## Reset database
 	npm run db:reset
 
-docker-build: ## Build Docker image
+up: ## Start all services (DB + App) with Docker Compose
+	docker compose up -d
+
+down: ## Stop all Docker Compose services
+	docker compose down
+
+up-db: ## Start development PostgreSQL only
+	docker compose up -d db
+
+up-db-test: ## Start test PostgreSQL only
+	docker compose up -d db-test
+
+logs-db: ## Show PostgreSQL logs
+	docker compose logs -f db
+
+docker-build: ## Build Docker image for production
 	docker build -t $(SERVICE_NAME):latest .
 
 docker-run: ## Run Docker container
