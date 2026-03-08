@@ -1,0 +1,87 @@
+[
+  {
+    "title": "GitHubリポジトリの作成とセットアップ",
+    "body": "## 概要\nGitHubリポジトリを作成し、基本的な設定を行う\n\n## タスク\n- [ ] リポジトリの作成\n- [ ] READMEの初期作成\n- [ ] .gitignoreの設定\n- [ ] ブランチ保護ルールの設定\n\n## 受入基準\n- リポジトリが作成され、基本設定が完了している\n- mainブランチの保護ルールが設定されている",
+    "labels": ["infrastructure", "setup", "phase-1"]
+  },
+  {
+    "title": "PostgreSQL環境のセットアップ（Docker Compose）",
+    "body": "## 概要\n開発環境用のPostgreSQL環境をDocker Composeで構築\n\n## タスク\n- [ ] docker-compose.ymlの作成\n- [ ] PostgreSQL 15のコンテナ設定\n- [ ] 初期化スクリプトの作成\n- [ ] ヘルスチェックの設定\n\n## 受入基準\n- `docker-compose up`でPostgreSQLが起動する\n- データが永続化される設定になっている",
+    "labels": ["infrastructure", "database", "phase-1"]
+  },
+  {
+    "title": "Prismaマイグレーションの初回実行",
+    "body": "## 概要\nPrismaスキーマからマイグレーションを作成し、実行する\n\n## タスク\n- [ ] 初回マイグレーションの作成\n- [ ] マイグレーションの実行確認\n- [ ] マイグレーション履歴の確認\n\n## 受入基準\n- データベースに全テーブルが作成される\n- インデックスと制約が正しく設定されている",
+    "labels": ["database", "phase-1"]
+  },
+  {
+    "title": "開発用シードデータの充実化",
+    "body": "## 概要\n開発・テスト用のシードデータを充実させる\n\n## タスク\n- [ ] 営業マスタのテストデータ追加（10名程度）\n- [ ] 顧客マスタのテストデータ追加（20社程度）\n- [ ] サンプル日報データの追加\n- [ ] Faker.jsでのランダムデータ生成\n\n## 受入基準\n- `npm run db:seed`でテストデータが投入される\n- 実際の運用を想定したデータになっている",
+    "labels": ["database", "phase-1"]
+  },
+  {
+    "title": "JWT認証ミドルウェアの実装",
+    "body": "## 概要\nJWTベースの認証ミドルウェアを実装\n\n## タスク\n- [ ] JWTトークン検証関数の実装\n- [ ] 認証ミドルウェアの作成\n- [ ] トークンからユーザー情報取得\n- [ ] エラーハンドリング\n\n## 技術仕様\n- ライブラリ: jsonwebtoken\n- トークン有効期限: 1時間\n- リフレッシュトークン: 7日間\n\n## 受入基準\n- 無効なトークンでアクセスすると401エラー\n- 有効なトークンでユーザー情報が取得できる\n\n## 関連\n- API仕様書: POST /api/v1/auth/login",
+    "labels": ["feature", "backend", "auth", "phase-2"]
+  },
+  {
+    "title": "パスワードハッシュ化機能の実装（bcrypt）",
+    "body": "## 概要\nbcryptを使用したパスワードハッシュ化機能\n\n## タスク\n- [ ] bcryptパッケージのインストール\n- [ ] ハッシュ化関数の実装\n- [ ] パスワード検証関数の実装\n- [ ] ソルトラウンド数の設定（10）\n\n## ファイル\n- `src/lib/auth/password.ts`\n\n## 受入基準\n- パスワードが平文で保存されない\n- 同じパスワードでも異なるハッシュが生成される\n- テストコードが作成されている",
+    "labels": ["feature", "backend", "auth", "phase-2"]
+  },
+  {
+    "title": "ログインAPIエンドポイントの実装",
+    "body": "## 概要\nPOST /api/v1/auth/login エンドポイントの実装\n\n## タスク\n- [ ] リクエストボディのバリデーション\n- [ ] メールアドレスでユーザー検索\n- [ ] パスワード検証\n- [ ] JWTトークン生成\n- [ ] レスポンス返却\n\n## API仕様\n- エンドポイント: POST /api/v1/auth/login\n- リクエスト: { email, password }\n- レスポンス: { access_token, refresh_token, user }\n\n## ファイル\n- `src/app/api/v1/auth/login/route.ts`\n\n## 受入基準\n- 正しい認証情報でトークンが発行される\n- 誤った認証情報で401エラー\n- 統合テストが作成されている",
+    "labels": ["feature", "backend", "api", "auth", "phase-2"]
+  },
+  {
+    "title": "ログイン画面の実装",
+    "body": "## 概要\nユーザー認証のログイン画面を実装\n\n## タスク\n- [ ] ログインフォームコンポーネントの作成\n- [ ] メールアドレス入力フィールド\n- [ ] パスワード入力フィールド\n- [ ] ログイン状態を保持するチェックボックス\n- [ ] バリデーションエラー表示\n- [ ] ログイン処理の実装\n\n## デザイン\n- screen-design.md の「ログイン画面」に準拠\n\n## ファイル\n- `src/app/login/page.tsx`\n- `src/components/LoginForm.tsx`\n\n## 受入基準\n- ログインに成功するとダッシュボードへ遷移\n- エラー時は適切なメッセージが表示される\n- E2Eテストが作成されている",
+    "labels": ["feature", "frontend", "auth", "phase-2"]
+  },
+  {
+    "title": "営業一覧取得APIの実装",
+    "body": "## 概要\nGET /api/v1/sales エンドポイントの実装\n\n## タスク\n- [ ] Prismaクエリの実装\n- [ ] 検索条件のフィルタリング\n- [ ] ソート機能\n- [ ] レスポンスの整形\n\n## API仕様\n- エンドポイント: GET /api/v1/sales\n- クエリパラメータ: status, department, is_supervisor\n- レスポンス: { items: Sales[] }\n\n## ファイル\n- `src/app/api/v1/sales/route.ts`\n\n## 受入基準\n- 全営業データが取得できる\n- フィルタリングが正しく動作する\n- 統合テストが作成されている",
+    "labels": ["feature", "backend", "api", "phase-3"]
+  },
+  {
+    "title": "営業マスタ管理画面（一覧）の実装",
+    "body": "## 概要\n営業マスタ一覧画面の実装\n\n## タスク\n- [ ] 営業一覧テーブルコンポーネント\n- [ ] 検索フィルター\n- [ ] 新規追加ボタン\n- [ ] 編集ボタン\n- [ ] ステータス表示\n\n## デザイン\n- screen-design.md の「営業マスタ管理画面」に準拠\n\n## ファイル\n- `src/app/admin/sales/page.tsx`\n- `src/components/SalesTable.tsx`\n\n## 受入基準\n- 営業データが一覧表示される\n- 検索・フィルタリングが動作する\n- 編集モーダルが開く",
+    "labels": ["feature", "frontend", "phase-3"]
+  },
+  {
+    "title": "日報作成APIの実装",
+    "body": "## 概要\nPOST /api/v1/reports エンドポイントの実装\n\n## タスク\n- [ ] リクエストバリデーション\n- [ ] 日報データの作成\n- [ ] 訪問記録の同時作成（ネストインサート）\n- [ ] トランザクション処理\n- [ ] エラーハンドリング\n\n## API仕様\n- エンドポイント: POST /api/v1/reports\n- リクエスト: { report_date, problem, plan, visits[] }\n- レスポンス: 作成された日報データ\n\n## ビジネスルール\n- 1営業1日1日報（ユニーク制約）\n- デフォルトステータス: draft\n\n## ファイル\n- `src/app/api/v1/reports/route.ts`\n- `src/lib/services/reportService.ts`\n\n## 受入基準\n- 日報と訪問記録が正しく作成される\n- 重複作成時は409エラー\n- 統合テストが作成されている",
+    "labels": ["feature", "backend", "api", "phase-4"]
+  },
+  {
+    "title": "日報作成画面の実装",
+    "body": "## 概要\n日報作成画面のUI実装\n\n## タスク\n- [ ] 日報作成フォームコンポーネント\n- [ ] 日付選択フィールド\n- [ ] 訪問記録の動的追加・削除\n- [ ] 顧客選択ドロップダウン\n- [ ] 訪問内容テキストエリア\n- [ ] Problem/Plan入力フィールド\n- [ ] 下書き保存ボタン\n- [ ] 提出ボタン\n- [ ] バリデーション\n\n## デザイン\n- screen-design.md の「日報作成・編集画面」に準拠\n\n## ファイル\n- `src/app/reports/new/page.tsx`\n- `src/components/DailyReportForm.tsx`\n- `src/components/VisitRecordForm.tsx`\n\n## 受入基準\n- 訪問記録を複数追加できる\n- バリデーションが正しく動作する\n- 下書き保存と提出が可能\n- E2Eテストが作成されている",
+    "labels": ["feature", "frontend", "phase-4"]
+  },
+  {
+    "title": "日報承認APIの実装",
+    "body": "## 概要\nPOST /api/v1/reports/:id/approve エンドポイントの実装\n\n## タスク\n- [ ] 上長権限のチェック\n- [ ] ステータス更新（approved）\n- [ ] 承認日時・承認者の記録\n- [ ] コメントの同時登録\n- [ ] 通知処理（オプション）\n\n## API仕様\n- エンドポイント: POST /api/v1/reports/:id/approve\n- リクエスト: { comments[] }\n- レスポンス: 更新された日報データ\n\n## ビジネスルール\n- 上長のみ実行可能\n- 提出済みステータスのみ承認可能\n\n## ファイル\n- `src/app/api/v1/reports/[id]/approve/route.ts`\n- `src/lib/services/approvalService.ts`\n\n## 受入基準\n- ステータスが正しく更新される\n- コメントが保存される\n- 権限チェックが動作する\n- 統合テストが作成されている",
+    "labels": ["feature", "backend", "api", "phase-5"]
+  },
+  {
+    "title": "日報承認画面の実装",
+    "body": "## 概要\n上長用の日報承認画面を実装\n\n## タスク\n- [ ] 日報詳細表示\n- [ ] コメント入力フォーム\n- [ ] Problem/Planへのコメント\n- [ ] 全体コメント\n- [ ] 承認ボタン\n- [ ] 差し戻しボタン\n\n## デザイン\n- screen-design.md の「日報承認画面」に準拠\n\n## ファイル\n- `src/app/supervisor/approve/page.tsx`\n- `src/components/ApprovalForm.tsx`\n\n## 受入基準\n- 日報内容が正しく表示される\n- コメントを追加して承認できる\n- 差し戻し時はコメント必須\n- E2Eテストが作成されている",
+    "labels": ["feature", "frontend", "phase-5"]
+  },
+  {
+    "title": "営業別サマリー集計APIの実装",
+    "body": "## 概要\nGET /api/v1/analytics/sales-summary エンドポイントの実装\n\n## タスク\n- [ ] 期間指定での集計\n- [ ] 訪問件数の集計\n- [ ] 提出率の計算\n- [ ] 承認率の計算\n- [ ] グループ化処理\n- [ ] クエリ最適化\n\n## API仕様\n- エンドポイント: GET /api/v1/analytics/sales-summary\n- クエリパラメータ: start_date, end_date, sales_id\n- レスポンス: { summary[], total }\n\n## ファイル\n- `src/app/api/v1/analytics/sales-summary/route.ts`\n- `src/lib/services/analyticsService.ts`\n\n## 受入基準\n- 正しく集計される\n- パフォーマンスが良好（1秒以内）\n- 統合テストが作成されている",
+    "labels": ["feature", "backend", "api", "analytics", "phase-6"]
+  },
+  {
+    "title": "レポート画面の実装",
+    "body": "## 概要\n集計・レポート画面のUI実装\n\n## タスク\n- [ ] 期間選択フィルター\n- [ ] 営業別サマリーテーブル\n- [ ] 訪問推移グラフ（Chart.js）\n- [ ] 顧客別訪問履歴テーブル\n- [ ] エクスポートボタン\n\n## デザイン\n- screen-design.md の「レポート画面」に準拠\n\n## ファイル\n- `src/app/supervisor/reports/page.tsx`\n- `src/components/VisitTrendsChart.tsx`\n- `src/components/SalesSummaryTable.tsx`\n\n## 受入基準\n- データが正しく表示される\n- グラフが描画される\n- CSVエクスポートが可能",
+    "labels": ["feature", "frontend", "phase-6"]
+  },
+  {
+    "title": "日報作成フローのE2Eテスト作成",
+    "body": "## 概要\nPlaywrightを使用した日報作成フローのE2Eテスト\n\n## タスク\n- [ ] ログイン処理\n- [ ] 日報作成画面への遷移\n- [ ] 訪問記録の追加\n- [ ] フォーム入力\n- [ ] 下書き保存の検証\n- [ ] 提出の検証\n- [ ] 一覧画面での確認\n\n## テストケース\n- 正常系: 完全な日報作成フロー\n- 異常系: バリデーションエラー\n- 異常系: 訪問記録0件での提出\n\n## ファイル\n- `tests/e2e/daily-report-create.spec.ts`\n\n## 受入基準\n- すべてのテストケースが成功する\n- スクリーンショットが保存される\n- CI/CDで自動実行される",
+    "labels": ["test", "e2e", "phase-8"]
+  }
+]

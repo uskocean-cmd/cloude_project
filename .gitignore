@@ -1,0 +1,43 @@
+# Node.js
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env*.local
+
+# Build outputs
+.next/
+dist/
+build/
+out/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary
+*.tmp
+.cache/
+
+# Secrets
+*.pem
+*.key
+*.cert
+service-account-key.json
+*-sa-key.json
+secrets/
+
+# Claude Code internal
+.claude/
+.serena/

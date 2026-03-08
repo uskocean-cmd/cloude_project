@@ -1,0 +1,58 @@
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Source control
+.git
+.gitignore
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Development tools
+.husky
+.eslintrc.json
+.prettierrc
+.prettierignore
+.eslintignore
+vitest.config.ts
+playwright.config.ts
+
+# Test files
+tests
+coverage
+playwright-report
+test-results
+
+# Documentation
+*.md
+requirements.md
+er-diagram.md
+screen-design.md
+api-specification.md
+test-specification.md
+ISSUES.md
+README_*.md
+issues.json
+create-*.sh
+
+# Build artifacts
+.next
+out
+dist
+build
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# CI/CD
+.github
