@@ -32,6 +32,16 @@ describe('hashPassword', () => {
     const hash = await hashPassword(longPassword);
     expect(hash).toMatch(/^\$2b\$/);
   });
+
+  it('ソルトラウンド数が10に設定されていること', async () => {
+    // bcryptハッシュの形式: $2b$<rounds>$<22文字のソルト><31文字のハッシュ>
+    // rounds部分を抽出して検証する
+    const hash = await hashPassword('password123');
+    const parts = hash.split('$');
+    // parts: ['', '2b', '10', '<salt+hash>']
+    const roundsInHash = parseInt(parts[2], 10);
+    expect(roundsInHash).toBe(10);
+  });
 });
 
 describe('verifyPassword', () => {
