@@ -1,9 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 import * as crypto from 'crypto';
 
-// 本番環境での実行を禁止する
+// 本番環境での実行を禁止する（二重ガード）
 if (process.env.NODE_ENV === 'production') {
   console.error('❌ seed スクリプトは本番環境では実行できません');
+  process.exit(1);
+}
+const dbUrl = process.env.DATABASE_URL ?? '';
+if (/prod(uction)?/i.test(dbUrl)) {
+  console.error('❌ 本番データベースへのシード実行は禁止されています (DATABASE_URL)');
   process.exit(1);
 }
 
